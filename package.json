@@ -9,12 +9,8 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "deploy": "sh build.sh"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo \"[Husky] pre-commit\""
-    }
+    "deploy": "sh build.sh",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "vuepress": "^1.9.5"
