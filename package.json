@@ -12,6 +12,12 @@
     "deploy": "sh build.sh"
   },
   "devDependencies": {
+    "husky": "^7.0.4",
     "vuepress": "^1.9.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn deploy"
+    }
   }
 }
