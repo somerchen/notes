@@ -24,6 +24,16 @@
 
   <img srcset="img1-320w.jpg 320w, img1-480w.jpg 480w, img1-800w.jpg 800w"
     sizes="(max-width: 320px) 280px, (max-width: 480px) 440px" src="img1-800w.jpg" />
+
+  <script>
+    var a = 0
+    {
+      a = 99
+      function a() { } // 块作用域里面声明函数，会在解析阶段被提升到块作用域顶部，但是只有执行到函数声明这一行时才会提升到全局变量(window)上
+      a = 66
+    }
+    console.log(a)
+  </script>
 </body>
 
 </html>
