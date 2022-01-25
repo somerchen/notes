@@ -28,6 +28,7 @@ export default defineConfig({
           '/面试题/Webpack/',
           '/面试题/网络/',
           '/面试题/手写系列/',
+          '/面试题/通用/',
         ]
       },
     ],
