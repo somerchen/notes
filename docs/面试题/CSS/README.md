@@ -54,7 +54,7 @@
   - 设置宽高无效；
   - 可以设置水平方向的 margin 和 padding，设置竖向的 margin 和 padding 无效；
   - 不会自动换行；
-- 快元素：
+- 块元素：
   - 可以设置宽高
   - 设置 margin 和 padding 都有效；
   - 会自动换行，多个块状排列默认从上到下；
@@ -121,7 +121,7 @@
 ## CSS 优化和提升性能的方法有哪些？
 
 - 加载性能
-  - 压缩代码，提及更小
+  - 压缩代码，体积更小
   - 使用 link 标签放在 head 中，早于 dom 加载，避免样式闪烁
 - 选择器性能
   - 尽量使用类选择器，少用标签选择器，尽量不用 \*
@@ -187,6 +187,6 @@ scroll-behavior 决定了当用户手动导航时或者 js 控制页面滚动到
 ## 如何解决移动端 1px 边框问题？
 
 1. 直接写 0.5px：兼容性不好；
-2. border-width 设为 1px，border-image 替代 border-color 使用渐变色，一半透明一半又颜色；
+2. border-width 设为 1px，border-image 替代 border-color 使用渐变色，一半透明一半有颜色；
 3. transform: scale 缩放；
-4. 更改页面 meta viewport 的缩放值为 1/window.devicePixelRatio，然后直接写 1px 即可。其他 px 单位也会被缩放，需要注意兼容。
+4. 更改页面 meta viewport 的缩放值为 1/window.devicePixelRatio，然后直接写 1px 即可。但是其他 px 单位也会被缩放，需要注意兼容。
