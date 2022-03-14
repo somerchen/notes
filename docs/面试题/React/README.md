@@ -16,13 +16,13 @@ React 是一个网页 UI 框架，通过组件化的方式解决视图层开发�
 
 ## React 的事件机制
 
-react17 以前的事件绑定都是绑定到 document 上，dom 上只是绑定一个空函数，当事件发生并冒泡上 document 上时，react 将事件内容封装并交给真正的处理函数执行。
+React17 以前的事件绑定都是绑定到 document 上，dom 上只是绑定一个空函数，当事件发生并冒泡上 document 上时，React 将事件内容封装并交给真正的处理函数执行。
 
 - 目的：
   - 抹平浏览器差异，更好的实现跨平台
-  - 避免垃圾回收，react 引入了事件池，在事件池获取或释放事件对象，避免频繁的创建和销毁
+  - 避免垃圾回收，React 引入了事件池，在事件池获取或释放事件对象，避免频繁的创建和销毁
   - 方便事件统一管理和事物机制
-- react17 改动
+- React17 改动
   - 事件绑定到 container 上，ReactDOM.render(app, container)，而不是 document 上，这样有利于微前端
   - 对齐浏览器原生事件：支持了原生的捕获事件，对齐了浏览器标准
   - 取消事件池，解决了在 setTimeout 打印时找不到 e.target 的问题
@@ -92,7 +92,7 @@ diff 算法就是虚拟 DOM 树发生变化后，生成 DOM 树更新补丁的�
 
 React 的 diff 算法采用了深度优先遍历算法。因为广度优先遍历可能会导致组件的生命周期时序错乱，而深度优先遍历算法就可以解决这个问题
 
-深度优先遍历算法复杂度是 O(n<sup>3</sup>)，react 通过从树、组件及元素三个层面进行复杂度的优化到了 O(n)
+深度优先遍历算法复杂度是 O(n<sup>3</sup>)，React 通过从树、组件及元素三个层面进行复杂度的优化到了 O(n)
 
 - 忽略节点跨层级操作场景，提升比对效率：两棵树对比过程中，如果发现节点不存在了，那么所有的子节点都会被删除，不需要进一步的对比
 - 在组件比对的过程中，如果组件是同一类型则进行树比对；如果不是则直接放入补丁中，只要父组件类型不同，就会被重新渲染
@@ -104,9 +104,9 @@ React 的 diff 算法采用了深度优先遍历算法。因为广度优先遍�
 
 ## 说说你对 fiber 的理解
 
-react15 在渲染时，会递归遍历 VirtualDOM 树，找出需要变动的节点，然后同步更新它们，一气呵成。这个过程期间，React 会占据浏览器资源，这会导致用户触发的事件得不到响应，并且会导致掉帧，导致用户感觉到卡顿。
+React15 在渲染时，会递归遍历 VirtualDOM 树，找出需要变动的节点，然后同步更新它们，一气呵成。这个过程期间，React 会占据浏览器资源，这会导致用户触发的事件得不到响应，并且会导致掉帧，导致用户感觉到卡顿。所以 React 通过 Fiber 架构，让这个执行过程变成可被中断。“适时”地让出 CPU 执行权。
 
-所以 React 通过 Fiber 架构，让这个执行过程变成可被中断。“适时”地让出 CPU 执行权，fiber 也称协程或者纤程，fiber 本身没有并发或者并行能力，他只是一种控制流程的让出机制。渲染的过程可以中断，将控制权交给浏览器，让 CPU 能先执行优先级更高的任务，浏览器空闲后再渲染。
+fiber 也称协程或者纤程，fiber 本身没有并发或者并行能力，他只是一种控制流程的让出机制。渲染的过程可以中断，将控制权交给浏览器，让 CPU 能先执行优先级更高的任务，浏览器空闲后再渲染。
 
 React 通过浏览器的`requestIdleCallback`API，让浏览器在有空的时候就执行我们的回调，但是在浏览器繁忙的时候，可能不会有盈余时间，这时候 requestIdleCallback 回调可能就不会被执行。 为了避免这种情况，可以通过 requestIdleCallback 的第二个参数指定一个超时时间。
 
@@ -126,9 +126,14 @@ React 通过浏览器的`requestIdleCallback`API，让浏览器在有空的时�
 ## 你是怎么做 React 的性能优化的
 
 - 对 React 组件本身做优化
-  - 使用 React.memo 来缓存组件。
+  - 能用其他状态计算出来就不用单独声明 useState 状态，理应使用 useMemo 缓存计算值
+  - 保证 useState 数据源唯一
+  - useState 适当合并
+  - 使用 React.memo 来缓存组件
+  - 只有变化时，需要重新执行 useEffect 的变量，才要放到 deps 中。而不是 useEffect 用到的变量都放到 deps 中
+  - 在有延迟调用场景时，可以通过 ref 来解决闭包问题
   - 使用 React.useMemo 缓存大量的计算。
-  - 使用 React.useCallback 缓存声明的函数，避免每次都要重新声明。
+  - 使用 React.useCallback 缓存声明的函数，避免每次 render 都会重新渲染导致接受这个函数的子组件重渲染（子组件需要使用 memo/componentShouldUpdate/PureComponent 缓存）。
   - 利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。
   - 尽量使用 CSS 控制显隐，而不是强制加载和卸载组件。
   - 使用 React.Fragment 避免添加额外的 DOM。
@@ -145,3 +150,48 @@ React 通过浏览器的`requestIdleCallback`API，让浏览器在有空的时�
 - 打包优化
   - 适当分包
   - tree shaking 去掉未使用代码
+
+## React17 以上的版本有哪些变化，解决了什么问题
+
+### React17
+
+React17 是没有新特性的大版本更新，主要是提供了多版本 React 共存的能力，同时为以后的快速迭代做好铺垫
+
+- 改变了原来的事件代理模式，原来是统一代理到 document 上，现在是代理到 container 上
+- 微调了合成事件，使其更符合浏览器原生事件
+  - onScroll 事件不再冒泡
+  - onFocus onBlur 底层改为 focusin focusout
+  - 捕获事件使用浏览器的捕获监听器
+  - 去除事件池，在现代浏览器上这个优化没有意义，反而因为重用事件对象造成困扰
+- useEffect 的清空操作改为异步执行，将在 render 渲染后调用
+
+### React18
+
+React18 会提供可渐进的升级策略，我们可以不需要改动原来的代码就能升级到 18，并且可以选择性的使用 React18 的新特性
+
+- 新的 Root API `ReactDOM.createRoot()`
+
+  react18 中的其他新特性，都需要使用新的 root API 来创建根节点
+
+- 并发渲染（concurrent rendering）
+
+  根据用户的设备性能和网速对渲染过程进行适当的调整， 保证 React 应用在长时间的渲染过程中依旧保持可交互性，避免页面出现卡顿或无响应的情况，从而提升用户体验
+
+- 批量更新（automatic batching）
+
+  在 17 以前的版本中，只有合成事件里的多个 setState 才会自动合并更新，对 promise.then，setTimeout，以及原生事件中的多个 setState 只会逐条更新，react18 中只需要使用新的 createRoot 去渲染根节点，就会自动启用批量更新，不需要额外配置。
+
+  如果希望保留逐条更新，可以使用 flushSync 来阻止
+
+- 新的服务端渲染支持（Suspense Hydration）
+
+  - React18 之前的 SSR，客户端必须一次性的等待 HTML 数据加载到服务器上并且等待所有 JavaScript 加载完毕。18 版本里服务器可以不需要等待被 Suspense 包裹组件是否加载到完毕，即可发送 HTML，而代替 suspense 包裹的组件是 fallback 中的内容，一般是一个占位符（spinner），以最小内联 script 标签标记此 HTML 的位置。等待服务器上组件的数据准备好后，React 再将剩余的 HTML 发送到同一个流中。
+
+  - hydration 的过程是逐步的，不需要等待所有的 js 加载完毕再开始 hydration，避免了页面的卡顿。
+
+  - React 会提前监听页面上交互事件（如鼠标的点击），对发生交互的区域优先级进行 hydration
+
+- 新增的 hooks
+  - useId 是一个新的 Hook，用于在客户端和服务端生成唯一 id，同时避免 hydration 的不兼容，这可以解决 React 17 以及更低版本的问题。
+  - useSyncExternalStore 是一个新的 Hook，可以防止在 concurrent 模式下，任务中断后第三方 store 被修改，恢复任务时出现 tearing 从而数据不一致问题，它允许外部存储通过强制同步更新来支持并发读取。推荐把这个新的 API 推荐应用到任何与 React 外部状态集成的库。
+  - useInsertionEffect 是一个新的 Hook，它可以解决 CSS-in-JS 库在渲染中动态注入样式的性能问题。

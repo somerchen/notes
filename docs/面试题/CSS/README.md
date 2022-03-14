@@ -190,3 +190,29 @@ scroll-behavior 决定了当用户手动导航时或者 js 控制页面滚动到
 2. border-width 设为 1px，border-image 替代 border-color 使用渐变色，一半透明一半有颜色；
 3. transform: scale 缩放；
 4. 更改页面 meta viewport 的缩放值为 1/window.devicePixelRatio，然后直接写 1px 即可。但是其他 px 单位也会被缩放，需要注意兼容。
+
+## CSS 动画怎么优化
+
+- 使用 transform 启用 GPU 加速
+- 使用 position absolute/float 脱离文档流，避免反复重绘回流
+
+## 移动端适配
+
+### rem 方案
+
+进入页面时使用 js 在 html 根结点设置一个 font-size，这段 js 需要在 css 代码之前执行，否则会出现样式闪烁。
+
+在 scss/less 中根据设计稿尺寸使用 px 作为单位，打包时依赖第三方包把 px 单位转为 rem
+
+### vw 方案
+
+纯 css 方案，只需要在预处理器中把 px 单位转化为 vw 即可
+
+## css 会阻塞页面吗？为什么
+
+- css 不会阻塞 DOM 解析
+- css 会阻塞 DOM 渲染
+- css 会阻塞后面的 js 执行
+
+> - css 解析和 DOM 解析是两个并行的过程，然而 render tree 是依赖 DOM tree 和 CSSOM tree 的，因此页面渲染需要等到 css 加载完毕/加载失败，因此 css 不会阻塞解析但是会阻塞渲染
+> - js 可能会操作之前的 DOM 节点和样式，因此浏览器会维护 html、css、js 的相对顺序，只有前面的 css 下载执行完了，才会执行 js。所以 css 会阻塞后面的 js 执行

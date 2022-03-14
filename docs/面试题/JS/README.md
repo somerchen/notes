@@ -214,6 +214,30 @@ this 是执行上下文的一个属性，他指向最后一个调用这个方法
 
 > 这四种方法，优先级从高到低是 构造函数调用 > apply/call/bind > 方法调用 > 函数调用
 
+## setTimeout 的 this 指向
+
+- 如果是个普调回调函数，则 this 会被挂载到 window
+- 如果是个箭头函数，则 this 会被指向定义时的作用域 this 指向
+
+## 事件循环与事件队列（EventLoop）
+
+js 是单线程执行的，大多数时候都是从上到下执行代码，但是当遇到异步代码时，会根据异步函数的类别是宏任务还是微任务，加入到不同事件队列中，直到当前同步任务执行完毕，js 会检查微任务队列是否有待执行的微任务，然后依次执行，直到微任务队列清空，视情况渲染页面。然后继续检查宏任务队列，执行宏任务...循环往复直到所有队列清空。
+
+## 有哪些宏任务，哪些微任务
+
+- 宏任务
+  - script
+  - setTimeout
+  - setInterval
+  - postMessage
+  - MessageChannel
+  - UI 交互事件
+  - setImmediate(node)
+- 微任务
+  - Promise
+  - MutationObserver
+  - process.nextTick(node)
+
 ## 异步编程
 
 - 回调函数：回调地狱
