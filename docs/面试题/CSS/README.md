@@ -216,3 +216,11 @@ scroll-behavior 决定了当用户手动导航时或者 js 控制页面滚动到
 
 > - css 解析和 DOM 解析是两个并行的过程，然而 render tree 是依赖 DOM tree 和 CSSOM tree 的，因此页面渲染需要等到 css 加载完毕/加载失败，因此 css 不会阻塞解析但是会阻塞渲染
 > - js 可能会操作之前的 DOM 节点和样式，因此浏览器会维护 html、css、js 的相对顺序，只有前面的 css 下载执行完了，才会执行 js。所以 css 会阻塞后面的 js 执行
+
+## 元素怎么垂直水平居中
+
+- 绝对定位四边都设为 0，配合`margin:auto`(需要子元素宽高固定)
+- 绝对定位 left、top 设为 50%，配合 margin-left、margin-top 设为宽高的一半的负值(需要子元素宽高固定)
+- 绝对定位 left、top 设为 50%，配合`tranform:translate(-50%,-50%)`(子元素宽高可以不固定)
+- flex 布局 justify-content align-items 都设为 center
+- grid 布局 justify-content align-items 都设为 center

@@ -108,10 +108,9 @@ NaN 是一个特殊值，它和自身不相等是唯一一个 `x === x` 不成�
 
 - 箭头函数更简洁
 - 箭头函数没有 this，它只会在自己作用域的上一层继承 this，所以它的 this 在定义的时候就固定了，后续不会再更改。call、apply、bing 不能改变箭头函数的 this 指向
-- 箭头函数不能作为构造函数
+- 箭头函数不能作为构造函数，没有 prototype 属性
 - 箭头函数不能 Generator 函数，不能用 yield 关键字
 - 箭头函数没有 arguments
-- 箭头函数没有 prototype
 
 ## 扩展运算符
 
@@ -216,7 +215,7 @@ this 是执行上下文的一个属性，他指向最后一个调用这个方法
 
 ## setTimeout 的 this 指向
 
-- 如果是个普调回调函数，则 this 会被挂载到 window
+- 如果是个普通回调函数，则 this 会被挂载到 window
 - 如果是个箭头函数，则 this 会被指向定义时的作用域 this 指向
 
 ## 事件循环与事件队列（EventLoop）
@@ -270,10 +269,10 @@ js 是单线程执行的，大多数时候都是从上到下执行代码，但�
 ES6 全称 ECMAScript6，指的是 2015 年发布的新一代 JavaScript 标准，一般也泛指包括 2015 年以后发布的所有新标准。
 
 - 新增的 BigInt symbol 类型
-- let、const
-- 解构赋值
-- 模版字符串
-- for of 遍历迭代器
+- **let、const**
+- **解构赋值**
+- **模版字符串**
+- **for of 遍历迭代器**
 - 新增的字符串方法
   - includes()
   - startsWith()
@@ -292,27 +291,27 @@ ES6 全称 ECMAScript6，指的是 2015 年发布的新一代 JavaScript 标准�
   - Number.isInteger()
   - Number.EPSILON
 - 函数的扩展
-  - 参数的默认值
-  - rest 参数
+  - **参数的默认值**
+  - **rest 参数**
   - name 属性
-  - 箭头函数
+  - **箭头函数**
   - 尾调用优化
   - catch 参数可省略
 - 数组的扩展
-  - 扩展运算符 ...
+  - **扩展运算符** `...`
   - Array.from
   - find()
   - findIndex()
   - fill()
-  - includes()
+  - **includes()**
 - 对象的扩展
-  - 属性与变量同名时可以简写
+  - **属性与变量同名时可以简写**
   - 属性是函数时，可以省略 `:function`
   - 属性名表达式
   - super 关键字
   - 新增的方法
     - Object.is()
-    - Object.assign()
+    - **Object.assign()**
     - Object.getOwnPropertyDescriptors()
     - Object.getPrototypeOf()
     - Object.setPrototypeOf()
@@ -323,18 +322,18 @@ ES6 全称 ECMAScript6，指的是 2015 年发布的新一代 JavaScript 标准�
     - Object.fromEntries()
 - 运算符扩展
   - 指数运算符 \*\*
-  - 链判断运算符 ?.
-  - Null 判断运算符 ??
+  - **链判断运算符** `?.`
+  - **Null 判断运算符** `??`
 - Set WeakSet
 - Map WeakMap
-- Proxy
+- **Proxy**
 - Reflect
-- Promise
-- async 函数
+- **Promise**
+- **async 函数**
 - Iterator 和 for...of 循环
 - Generator 函数
 - Class
-- Module
+- **Module**
   - import from
   - import()
   - export

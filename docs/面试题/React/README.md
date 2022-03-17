@@ -112,11 +112,11 @@ React 通过浏览器的`requestIdleCallback`API，让浏览器在有空的时�
 
 这个超时时间不是死的，低优先级的可以慢慢等待, 高优先级的任务应该率先被执行. 目前 React 预定义了 5 个优先级
 
-`Immediate`(-1) - 这个优先级的任务会同步执行, 或者说要马上执行且不能中断
-`UserBlocking`(250ms) 这些任务一般是用户交互的结果, 需要即时得到反馈
-`Normal` (5s) 对应那些不需要立即感受到的任务，例如网络请求
-`Low` (10s) 这些任务可以放后，但是最终应该得到执行. 例如分析通知
-`Idle` (没有超时时间) 一些没有必要做的任务 (e.g. 比如隐藏的内容), 可能会被饿死
+- `Immediate`(-1) - 这个优先级的任务会同步执行, 或者说要马上执行且不能中断
+- `UserBlocking`(250ms) 这些任务一般是用户交互的结果, 需要即时得到反馈
+- `Normal` (5s) 对应那些不需要立即感受到的任务，例如网络请求
+- `Low` (10s) 这些任务可以放后，但是最终应该得到执行. 例如分析通知
+- `Idle` (没有超时时间) 一些没有必要做的任务 (e.g. 比如隐藏的内容), 可能会被饿死
 
 ## React Hook 的使用限制有哪些
 
@@ -133,7 +133,7 @@ React 通过浏览器的`requestIdleCallback`API，让浏览器在有空的时�
   - 只有变化时，需要重新执行 useEffect 的变量，才要放到 deps 中。而不是 useEffect 用到的变量都放到 deps 中
   - 在有延迟调用场景时，可以通过 ref 来解决闭包问题
   - 使用 React.useMemo 缓存大量的计算。
-  - 使用 React.useCallback 缓存声明的函数，避免每次 render 都会重新渲染导致接受这个函数的子组件重渲染（子组件需要使用 memo/componentShouldUpdate/PureComponent 缓存）。
+  - 使用 React.useCallback 缓存声明的函数，避免每次 render 都会改变函数的引用导致接收这个函数的子组件重渲染（子组件需要使用 memo/componentShouldUpdate/PureComponent 缓存）。
   - 利用 React.lazy 和 React.Suspense 延迟加载不是立即需要的组件。
   - 尽量使用 CSS 控制显隐，而不是强制加载和卸载组件。
   - 使用 React.Fragment 避免添加额外的 DOM。

@@ -11,9 +11,9 @@ DOCTYPE 是 HTML5 的一种标准通用标记语言的文档声明类型，它�
 
 ## HTML5 为什么只需要写 \<!DOCTYPE html>
 
-HTML5 不基于 SGML（Standard Generalized Markup Language 标准通用标记语言），因此不需要对 DTD（DTD 文档定义类型）进行饮用，但是需要 DOCTYPE 来规范浏览器行为，`<!DOCTYPE html>` 会让浏览器进入标准模式，使用最新的 HTML5 标准来解析渲染页面。
+HTML5 不基于 SGML（Standard Generalized Markup Language 标准通用标记语言），因此不需要对 DTD（DTD 文档定义类型）进行引用，但是需要 DOCTYPE 来规范浏览器行为，`<!DOCTYPE html>` 会让浏览器进入标准模式，使用最新的 HTML5 标准来解析渲染页面。
 
-HTML4.01 基于 SGML，所以需要饮用 DTD，才能告知浏览器文档所使用的文档类型，如下：
+HTML4.01 基于 SGML，所以需要引用 DTD，才能告知浏览器文档所使用的文档类型，如下：
 
 ```html
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -224,6 +224,7 @@ iframe 元素会创建包含另外一个文档的内联框架：
   - iframe 会阻塞主页面的 onload 事件
   - 无法被一些搜索引擎识别
   - 会产生很多页面，不容易管理
+  - 容易导致一些安全问题
 
 ## label 的作用是什么？如何使用？
 
